@@ -17,19 +17,22 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//main route
+// Main Route
 Route::group(['middleware' => ['auth']], function() {
-    Route::get('/dashboard', 'App\Http\Controllers\DashboardController@index')->name('dashboard');
+    Route::get('/home', 'App\Http\Controllers\DashboardController@index')->name('dashboard');
 });
 
-//Route orders
+// Route orders
 Route::group(['middleware' => ['auth', 'role:customer']], function() {
-    Route::get('/dashboard/orders', 'App\Http\Controllers\DashboardController@orders')->name('dashboard.orders');
+    Route::get('/orders', 'App\Http\Controllers\DashboardController@orders')->name('dashboard.orders');
 });
 
-//Route inventory
+// Route inventory
 Route::group(['middleware' => ['auth', 'role:supplier']], function() {
-    Route::get('/dashboard/inventory', 'App\Http\Controllers\DashboardController@inventory')->name('dashboard.inventory');
+    // Route::get('/inventory', 'App\Http\Controllers\DashboardController@inventory')->name('dashboard.inventory');
+    Route::resource('inventory', 'App\Http\Controllers\ItemController');
 });
+
+// Route::post('/createitem', 'App\Http\Controllers\ItemController@store');
 
 require __DIR__.'/auth.php';
