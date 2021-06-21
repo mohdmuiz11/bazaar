@@ -47,7 +47,7 @@ class ItemController extends Controller
             'item_available_unit' => $request->get('item_available_unit')
         ]);
         $items->save();
-        return redirect('/inventory')->with('success', 'Your items have been created saved!');
+        return redirect('/inventory')->with('success', 'Your items have been created!');
     }
 
     /**

@@ -15,7 +15,7 @@ class DashboardController extends Controller
             return view('supplierdash');
         }
         else if (Auth::user()->hasRole('admin')) {
-            return view('dashboard');
+            return view('admindashboard');
         }
     }
 
