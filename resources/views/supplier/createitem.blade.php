@@ -7,11 +7,11 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg ">
                 <div class="p-6 bg-white border-b border-gray-200">
-                    Create items for your inventory:
+                    <h1 class="font-bold text-lg mb-3 text-center">What item do you want to sell?</h1>
 
-                    <div class="w-full sm:max-w-lg mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
+                    <div class="w-full sm:max-w-lg mt-6 mx-auto px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
 
                         <form method="POST" action="{{ route('inventory.store') }}">
                             @csrf
