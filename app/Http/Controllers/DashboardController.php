@@ -26,4 +26,8 @@ class DashboardController extends Controller
     public function inventory() {
         return view('supplier.inventory');
     }
+
+    public function category(){
+        return view('admin.category');
+    }
 }
