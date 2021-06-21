@@ -10,6 +10,11 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     {{-- Item table --}}
+                    @if(session()->get('success'))
+                        <div class="bg-green-100 p-4 mb-4">
+                            {{ session()->get('success') }}
+                        </div>
+                    @endif
                     <h1 class="font-bold text-lg mb-3">List of items in your inventory:</h1>
                     <table class="w-full table-fixed border-collapse">
                         <thead>
@@ -30,18 +35,31 @@
                                 <td class="border-2 border-green-500">no</td> {{-- nanti kalau dah siap category leh tambah ni --}}
                                 <td class="border-2 border-green-500">RM @convert($item->item_price)</td>
                                 <td class="border-2 border-green-500">{{$item->item_available_unit}}</td>
-                                <td class="border-2 border-green-500">
-                                    <x-button class="my-4">
-                                        {{ __('Edit') }}
-                                    </x-button>
-                                    <x-button class="my-4">
-                                        {{ __('Delete') }}
-                                    </x-button>
+                                <td class="border-2 border-green-500 flex items-center justify-center">
+                                    <a href="{{ route('inventory.edit', $item->id) }}">
+                                        <x-button class="m-1">
+                                            {{ __('Edit') }}
+                                        </x-button>
+                                    </a>
+                                    <form method="POST" action="{{ route('inventory.destroy', $item->id) }}">
+                                        @csrf
+                                        @method('DELETE')
+                                        <x-button-del class="m-1">
+                                            {{ __('Delete') }}
+                                        </x-button-del>
+                                    </form>
                                 </td>
                             </tr>
                             @endforeach
                         </tbody>
                     </table>
+                    <div class="flex items-center justify-center bg-gray-100">
+                        <a href="/inventory/create">
+                            <x-button class="m-4">
+                                {{ __('Add') }}
+                            </x-button>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

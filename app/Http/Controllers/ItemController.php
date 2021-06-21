@@ -25,7 +25,7 @@ class ItemController extends Controller
      */
     public function create()
     {
-        return view('supplier.createitem');
+        return view('supplier.create-item');
     }
 
     /**
@@ -69,8 +69,8 @@ class ItemController extends Controller
      */
     public function edit($id)
     {
-        // $item = Item::find($id);
-        // return view('students.edit', compact('students'));
+        $item = Item::find($id);
+        return view('supplier.edit-item', compact('item'));
     }
 
     /**
