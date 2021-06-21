@@ -13,25 +13,51 @@
 
                     <div class="w-full sm:max-w-lg mt-6 mx-auto px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
 
+                        {{-- Process of POST data to ItemController@store starts here --}}
                         <form method="POST" action="{{ route('inventory.store') }}">
+
+                            {{-- Laravel's Cross-Site Request Forgery protection, wajib to use --}}
                             @csrf
+
+                            {{-- New Item Name --}}
                             <div class="mt-4">
                                 <x-label for="item_name" :value="__('Item Name')" />
 
                                 <x-input id="item_name" class="block mt-1 w-full" type="text" name="item_name"
                                     :value="old('item_name')" required />
                             </div>
+
+                            {{-- Your Price. In the future, pls letak RM sebelah input thanks :) --}}
                             <div class="mt-4">
                                 <x-label for="item_price" :value="__('Item Price')" />
 
                                 <x-input id="item_price" class="block mt-1 w-full" type="number" step="0.01" name="item_price"
                                     :value="old('item_price')" required />
                             </div>
+
+                            {{-- How many items you want --}}
                             <div class="mt-4">
                                 <x-label for="item_available_unit" :value="__('Item Amount')" />
 
                                 <x-input id="item_available_unit" class="block mt-1 w-full" type="text"
                                     name="item_available_unit" :value="old('item_available_unit')" required />
+                            </div>
+
+                            {{-- Choose a category --}}
+                            <div class="mt-4">
+                                <x-label for="catID" value="{{ __('Category:') }}"/>
+                                <select name="catID" class="block mt-1 w-full border-gray-300 focus:border-indigo-300 focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
+                                    {{-- $categories were declared from ItemController@create --}}
+                                    @if ($categories->isEmpty())
+                                        <option value="">-- No category available --</option>
+                                    @else
+                                        @foreach ($categories as $count => $category)
+                                            {{-- for loop the categories in a single category --}}
+                                            <option value="{{ $category->id }}">{{ $category->cat_name }}</option>
+                                            {{-- we want value of catID only, the cat_name is for easy to read --}}
+                                        @endforeach
+                                    @endif
+                                </select>
                             </div>
                             <div class="flex items-center justify-end mt-4">
 

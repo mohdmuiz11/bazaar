@@ -9,13 +9,28 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
-                    {{-- Item table --}}
+
+                    {{-- When deleting, editing or adding, this message will appear, from CategoryController --}}
                     @if(session()->get('success'))
                         <div class="bg-green-100 p-4 mb-4">
                             {{ session()->get('success') }}
                         </div>
                     @endif
+
+                    {{-- Exceptions handling --}}
+                    @if ($errors->any())
+                    <div class="bg-red-100 p-4 mb-4">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
+
+                    {{-- Category table --}}
                     <h1 class="font-bold text-lg mb-3">List of categories:</h1>
+                    <p>Note: Do NOT delete categories that have items related to it.</p>
                     <table class="w-full table-fixed border-collapse">
                         <thead>
                             <tr class="bg-blue-200">
@@ -25,16 +40,19 @@
                             </tr>
                         </thead>
                         <tbody>
+                            {{-- Get some data of $category, which has been declared from CategoryContoller@index --}}
                             @foreach($categories as $count => $category)
                             <tr class="text-center">
                                 <td class="border-2 border-blue-500">{{$category->id}}</td>
                                 <td class="border-2 border-blue-500 text-left pl-3">{{$category->cat_name}}</td>
                                 <td class="border-2 border-blue-500 flex items-center justify-center">
+                                    {{-- To edit items, go here --}}
                                     <a href="{{ route('admincategory.edit', $category->id) }}">
                                         <x-button class="m-1">
                                             {{ __('Edit') }}
                                         </x-button>
                                     </a>
+                                    {{-- To delete items, go here --}}
                                     <form method="POST" action="{{ route('admincategory.destroy', $category->id) }}">
                                         @csrf
                                         @method('DELETE')
@@ -47,6 +65,7 @@
                             @endforeach
                         </tbody>
                     </table>
+                    {{-- Added "ADD" button, because there's no navigation link for adding category --}}
                     <div class="flex items-center justify-center bg-gray-100">
                         <a href="/admincategory/create">
                             <x-button class="m-4">

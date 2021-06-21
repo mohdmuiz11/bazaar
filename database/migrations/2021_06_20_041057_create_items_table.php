@@ -18,6 +18,8 @@ class CreateItemsTable extends Migration
             $table->string('item_name');
             $table->float('item_price');
             $table->integer('item_available_unit');
+            $table->foreignId('catID')->constrained('categories');
+            $table->foreignId('suppID')->constrained('users'); //refer kat user table
             $table->timestamps();
         });
     }

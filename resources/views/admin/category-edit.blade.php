@@ -13,9 +13,15 @@
 
                     <div class="w-full sm:max-w-lg mt-6 mx-auto px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
 
+                        {{-- Process of PATCH data to CategoryController@update --}}
                         <form method="POST" action="{{ route('admincategory.update', $category->id) }}">
+
+                            {{-- PATCH means updating data, modern way of POST but updates only --}}
                             @method('PATCH')
+                            {{-- Laravel's Cross-Site Request Forgery protection, wajib to use --}}
                             @csrf
+
+                            {{-- Edit Category Name --}}
                             <div class="mt-4">
                                 <x-label for="cat_name" :value="__('Category Name')" />
 

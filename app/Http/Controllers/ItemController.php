@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Item;
+use App\Models\Category;
+
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class ItemController extends Controller
@@ -14,7 +17,8 @@ class ItemController extends Controller
      */
     public function index()
     {
-        $items = Item::all();
+        // $items = Item::all(); //this retrieves all "items" data in the database, don't use this
+        $items = Auth::user()->items; // to retrieve data available for that particular supplier
         return view('supplier.inventory', compact('items'));
     }
 
@@ -25,7 +29,9 @@ class ItemController extends Controller
      */
     public function create()
     {
-        return view('supplier.create-item');
+        // to show view of create-item, and pass all "categories" data available in the database
+        $categories = Category::all();
+        return view('supplier.create-item', compact('categories'));
     }
 
     /**
@@ -36,17 +42,25 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
+        // validation process, incase if user put some weird data inside this
         $request->validate([
             'item_name'=>'required|string|max:100',
             'item_price'=>'required',
-            'item_available_unit'=>'required|numeric'
+            'item_available_unit'=>'required|numeric',
+            'catID' => 'required'
         ]);
-        $items = new Item([
+
+        // storing all datas here into "items" table in database
+        $item = new Item([
             'item_name' => $request->get('item_name'),
             'item_price' => $request->get('item_price'),
-            'item_available_unit' => $request->get('item_available_unit')
+            'item_available_unit' => $request->get('item_available_unit'),
+            'catID' => $request->get('catID'),
+            'suppID' => Auth::id() //automatically assigned user's id to this foreign key
         ]);
-        $items->save();
+        $item->save();
+
+        // success message, you can edit it as you like
         return redirect('/inventory')->with('success', 'Your items have been created!');
     }
 
@@ -69,8 +83,11 @@ class ItemController extends Controller
      */
     public function edit($id)
     {
+        // Retrieve details of the "item(id)" of "items"
+        // and "categories"(to select categories) in view edit-item
         $item = Item::find($id);
-        return view('supplier.edit-item', compact('item'));
+        $categories = Category::all();
+        return view('supplier.edit-item', compact('item','categories'));
     }
 
     /**
@@ -82,17 +99,24 @@ class ItemController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // validation process, incase if user put some weird data inside this
         $request->validate([
             'item_name'=>'required|string|max:100',
             'item_price'=>'required|numeric',
-            'item_available_unit'=>'required|numeric'
+            'item_available_unit'=>'required|numeric',
+            'catID' => 'required'
         ]);
 
-        $items = Item::find($id);
-        $items->item_name =  $request->get('item_name');
-        $items->item_price = $request->get('item_price');
-        $items->item_available_unit = $request->get('item_available_unit');
-        $items->save();
+        // updating all the data from view edit-item using PATCH
+        // then update relevant details into "item" of the "items" table
+        $item = Item::find($id);
+        $item->item_name =  $request->get('item_name');
+        $item->item_price = $request->get('item_price');
+        $item->item_available_unit = $request->get('item_available_unit');
+        $item->catID = $request->get('catID');
+        $item->save();
+
+        // success message, you can edit it as you like
         return redirect('/inventory')->with('success', 'All changes are saved!');
     }
 
@@ -104,8 +128,11 @@ class ItemController extends Controller
      */
     public function destroy($id)
     {
-        $items = Item::find($id);
-        $items->delete();
+        // find the item's id in "items", then deletes it
+        $item = Item::find($id);
+        $item->delete();
+
+        // success message, you can edit it as you like
         return redirect('/inventory')->with('success', 'The select item has been deleted!');
     }
 }
