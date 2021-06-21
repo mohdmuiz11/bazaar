@@ -35,7 +35,7 @@ Route::group(['middleware' => ['auth', 'role:supplier']], function() {
 
 //Route category
 Route::group(['middleware' => ['auth', 'role:admin']], function() {
-    Route::resource('category', 'App\Http\Controllers\CategoryController');
+    Route::resource('admincategory', 'App\Http\Controllers\CategoryController');
 });
 
 // Route::post('/createitem', 'App\Http\Controllers\ItemController@store');

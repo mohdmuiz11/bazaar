@@ -58,7 +58,7 @@ class ItemController extends Controller
      */
     public function show(Item $item)
     {
-
+        //only useful for customer's order i guess
     }
 
     /**
