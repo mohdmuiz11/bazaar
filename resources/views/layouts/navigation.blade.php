@@ -11,11 +11,14 @@
                 </div>
 
                 <!-- Navigation Links -->
+                <!-- GENERAL -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Home') }}
                     </x-nav-link>
                 </div>
+
+                <!-- CUSTOMER -->
                 @if (Auth::user()->hasRole('customer'))
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-nav-link :href="route('dashboard.orders')" :active="request()->routeIs('dashboard.orders')">
@@ -23,15 +26,21 @@
                         </x-nav-link>
                     </div>
                 @endif
+
+                <!-- SUPPLIER -->
                 @if (Auth::user()->hasRole('supplier'))
-                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <x-nav-link :href="route('inventory.index')" :active="request()->routeIs('inventory.index')">
-                            {{ __('Your Inventory') }}
-                        </x-nav-link>
-                    </div>
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-nav-link :href="route('inventory.create')" :active="request()->routeIs('inventory.create')">
                             {{ __('Sell Item') }}
+                        </x-nav-link>
+                    </div>
+                @endif
+
+                <!-- ADMIN -->
+                @if (Auth::user()->hasRole('admin'))
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-nav-link :href="route('category.create')" :active="request()->routeIs('category.create')">
+                            {{ __('Create Category') }}
                         </x-nav-link>
                     </div>
                 @endif

@@ -14,7 +14,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.index');
     }
 
     /**
@@ -24,7 +24,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.createcategory');
     }
 
     /**
@@ -35,7 +35,14 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'cat_name'=>'required|string|max:100',
+        ]);
+        $category = new Category([
+            'cat_name' => $request->get('cat_name'),
+        ]);
+        $category->save();
+        return redirect('category/create')->with('New category has been created!');
     }
 
     /**
@@ -78,8 +85,8 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy()
     {
-        //
+        return view('admin.deletecategory');
     }
 }

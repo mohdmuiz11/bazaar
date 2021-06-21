@@ -33,6 +33,11 @@ Route::group(['middleware' => ['auth', 'role:supplier']], function() {
     Route::resource('inventory', 'App\Http\Controllers\ItemController');
 });
 
+//Route category
+Route::group(['middleware' => ['auth', 'role:admin']], function() {
+    Route::resource('category', 'App\Http\Controllers\CategoryController');
+});
+
 // Route::post('/createitem', 'App\Http\Controllers\ItemController@store');
 
 require __DIR__.'/auth.php';
