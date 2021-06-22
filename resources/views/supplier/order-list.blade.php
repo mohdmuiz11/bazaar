@@ -18,7 +18,7 @@
                     @endif
 
                     {{-- Purchase table, almost same as item table --}}
-                    <h1 class="font-bold text-lg mb-3">List of orders that you made:</h1>
+                    <h1 class="font-bold text-lg mb-3">List of customer's orders:</h1>
                     <table class="w-full table-fixed border-collapse">
                         <thead>
                             <tr class="bg-green-200">
@@ -26,8 +26,7 @@
                                 <th class="w-5/12 border-2 border-green-500">Product Name</th>
                                 <th class="w-2/12 border-2 border-green-500">Price</th>
                                 <th class="w-2/12 border-2 border-green-500">Date Purchased</th>
-                                <th class="w-1/12 border-2 border-green-500">Quantity</th>
-                                <th class="w-1/6  border-2 border-green-500">Modify</th>
+                                <th class="w-3/12 border-2 border-green-500">Quantity</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -42,39 +41,18 @@
                                 <td class="border-2 border-green-500">RM @convert($purchase->item->item_price)</td>
                                 <td class="border-2 border-green-500">{{ $purchase->purchase_date}}</td>
                                 <td class="border-2 border-green-500">{{ $purchase->quantity }}</td>
-                                @php
-                                    $total_price += $purchase->item->item_price * $purchase->quantity;
-                                @endphp
-                                <td class="border-2 border-green-500 flex items-center justify-center">
-                                    {{-- To edit items, go here --}}
-                                    <a href="{{ route('orders.edit', $purchase->id) }}">
-                                        <x-button class="m-1">
-                                            {{ __('Edit') }}
-                                        </x-button>
-                                    </a>
-                                    {{-- To delete items, go here --}}
-                                    <form method="POST" action="{{ route('orders.destroy', $purchase->id) }}">
-                                        @csrf
-                                        @method('DELETE')
-                                        <x-button-del class="m-1">
-                                            {{ __('Delete') }}
-                                        </x-button-del>
-                                    </form>
-                                </td>
                             </tr>
                             @endforeach
                         </tbody>
                     </table>
 
-                    {{-- {{ $todaydate = Carbon\Carbon::now()->toDateString() }} purchase date debug  --}}
-                    {{-- Added "BUY SOMETHING" button, because ya know, you had to buy something. duh --}}
+                    {{-- Added "RETURN" button, for accessibility sake i guess --}}
                     <div class="flex items-center justify-center bg-gray-100">
-                        <a href="/orders/create">
+                        <a href="/inventory">
                             <x-button class="m-4">
-                                {{ __('Buy Something') }}
+                                {{ __('Return') }}
                             </x-button>
                         </a>
-                        <h1 class="text-bold text-2xl justify-self-end">Total price: RM @convert($total_price)</h1>
                     </div>
                 </div>
             </div>

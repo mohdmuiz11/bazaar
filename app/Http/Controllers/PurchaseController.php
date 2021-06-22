@@ -6,6 +6,7 @@ use App\Models\Purchase;
 use App\Models\Item;
 use App\Models\Category;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -44,20 +45,33 @@ class PurchaseController extends Controller
      */
     public function store(Request $request)
     {
-        // validation process, incase if user put some weird data inside this
-        $request->validate([
-            'itemID'=>'required',
-            'custID'=>'required',
-            'purchase_date' => 'required|date',
-            'quantity'=>'required|numeric'
-        ]);
+        // // validation process, incase if user put some weird data inside this
+        // $request->validate([
+        //     'itemID'=>'required',
+        //     'custID'=>'required',
+        //     'purchase_date' => 'required|date',
+        //     'quantity'=>'required|numeric'
+        // ]);
+
+        $checkpurchase = Purchase::all();
+
+        // check if the item is duplicated
+        foreach ($checkpurchase as $count => $somepurchase) {
+            if ($somepurchase->itemID == $request->get('itemID')){
+                ++$somepurchase->quantity;
+                $somepurchase->save();
+                return redirect('/orders')->with('success', 'The item has been added to your orders!');
+            }
+        }
+
+        $todaydate = Carbon::now()->toDateString();
 
         // storing all datas here into "purchases" table in database
         $purchase = new Purchase([
             'itemID' => $request->get('itemID'),
             'custID' => Auth::id(), //automatically assigned user's id to this foreign key
-            'purchase_date' => $request->get('purchase_date'),
-            'quantity' => $request->get('quantity')
+            'purchase_date' => $todaydate,
+            'quantity' => '1' // default to one quantity, can be edit later
         ]);
         $purchase->save();
 
@@ -73,10 +87,7 @@ class PurchaseController extends Controller
      */
     public function show($id)
     {
-        // show details of a goddamn item details using $id
-        // use this instead of ItemController since it is restricted only for supplier role
-        $item = Item::find($id);
-        return view('customer.itemdetails', compact('items'));
+        // show details about item maybe??
     }
 
     /**

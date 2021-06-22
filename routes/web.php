@@ -26,6 +26,7 @@ Route::group(['middleware' => ['auth']], function() {
 Route::group(['middleware' => ['auth', 'role:customer']], function() {
     // Route::get('orders', 'App\Http\Controllers\DashboardController@orders')->name('dashboard.orders');
     Route::resource('orders', 'App\Http\Controllers\PurchaseController');
+    Route::post('/category', 'App\Http\Controllers\MarketController@show')->name('category.show');
 });
 
 // Route inventory
