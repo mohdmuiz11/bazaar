@@ -45,8 +45,8 @@ class ItemController extends Controller
         // validation process, incase if user put some weird data inside this
         $request->validate([
             'item_name'=>'required|string|max:100',
-            'item_price'=>'required',
-            'item_available_unit'=>'required|numeric',
+            'item_price'=>'required|gt:0',
+            'item_available_unit'=>'required|numeric|gt:0',
             'catID' => 'required'
         ]);
 
@@ -102,8 +102,8 @@ class ItemController extends Controller
         // validation process, incase if user put some weird data inside this
         $request->validate([
             'item_name'=>'required|string|max:100',
-            'item_price'=>'required|numeric',
-            'item_available_unit'=>'required|numeric',
+            'item_price'=>'required|gt:0', //price must be above 0, unless u want to sell freebies
+            'item_available_unit'=>'required|numeric|gt:0',
             'catID' => 'required'
         ]);
 

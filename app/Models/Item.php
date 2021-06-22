@@ -31,4 +31,10 @@ class Item extends Model
     public function supplier() {
         return $this->belongsTo(User::class, 'suppID');
     }
+
+    // to retrieve all purchase details that was ordered by customers
+    // use: {{ $item->purchases }}
+    public function purchases() {
+        return $this->hasMany(Purchase::class, 'itemID');
+    }
 }

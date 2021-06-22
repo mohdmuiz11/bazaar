@@ -50,4 +50,10 @@ class User extends Authenticatable
     public function items() {
         return $this->hasMany(Item::class, 'suppID');
     }
+
+    // to retrieve data of "purchases" that user owns
+    // use Auth to access customer's purchases: {{ Auth::user()->purchases }}
+    public function purchases() {
+        return $this->hasMany(Purchase::class, 'custID');
+    }
 }

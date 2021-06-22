@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Purchase;
+use App\Models\Item;
+use App\Models\Category;
+
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class PurchaseController extends Controller
@@ -13,7 +18,9 @@ class PurchaseController extends Controller
      */
     public function index()
     {
-        //
+        // to retrieve data available for that particular customer
+        $purchases = Auth::user()->purchases;
+        return view('customer.orders', compact('purchases'));
     }
 
     /**
@@ -23,7 +30,10 @@ class PurchaseController extends Controller
      */
     public function create()
     {
-        //
+        // browsing marketplaces for customers according to categories
+        // no search queries, so no
+        $categories = Category::all();
+        return view('customer.marketplace', compact('categories'));
     }
 
     /**
@@ -34,7 +44,25 @@ class PurchaseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // validation process, incase if user put some weird data inside this
+        $request->validate([
+            'itemID'=>'required',
+            'custID'=>'required',
+            'purchase_date' => 'required|date',
+            'quantity'=>'required|numeric'
+        ]);
+
+        // storing all datas here into "purchases" table in database
+        $purchase = new Purchase([
+            'itemID' => $request->get('itemID'),
+            'custID' => Auth::id(), //automatically assigned user's id to this foreign key
+            'purchase_date' => $request->get('purchase_date'),
+            'quantity' => $request->get('quantity')
+        ]);
+        $purchase->save();
+
+        // success message, you can edit it as you like
+        return redirect('/orders')->with('success', 'The item has been added to your orders!');
     }
 
     /**
@@ -45,7 +73,10 @@ class PurchaseController extends Controller
      */
     public function show($id)
     {
-        //
+        // show details of a goddamn item details using $id
+        // use this instead of ItemController since it is restricted only for supplier role
+        $item = Item::find($id);
+        return view('customer.itemdetails', compact('items'));
     }
 
     /**
@@ -56,7 +87,10 @@ class PurchaseController extends Controller
      */
     public function edit($id)
     {
-        //
+        // The only thing customer can edit is quantity so bruh
+        $purchase = Purchase::find($id);
+        $item = Purchase::find($id)->item;
+        return view('customer.edit-purchase', compact('item','purchase'));
     }
 
     /**
@@ -68,7 +102,19 @@ class PurchaseController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // validation process, incase if user put some weird data inside this
+        $request->validate([
+            'quantity'=>'required|numeric|gt:0' // must be above 0, if you want it 0, just delete it lmao
+        ]);
+
+        // updating all the data from view edit-purchase using PATCH
+        // then update relevant details into "purchase" of the "purchases" table
+        $purchase = Purchase::find($id);
+        $purchase->quantity =  $request->get('quantity');
+        $purchase->save();
+
+        // success message, you can edit it as you like
+        return redirect('/orders')->with('success', 'All changes are saved!');
     }
 
     /**
@@ -79,6 +125,11 @@ class PurchaseController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // find the purchase's id in "purchases", then deletes it
+        $purchase = Purchase::find($id);
+        $purchase->delete();
+
+        // success message, you can edit it as you like
+        return redirect('/orders')->with('success', 'The select purchase has been deleted!');
     }
 }

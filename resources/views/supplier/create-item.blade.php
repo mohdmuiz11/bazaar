@@ -44,27 +44,43 @@
                             </div>
 
                             {{-- Choose a category --}}
-                            <div class="mt-4">
-                                <x-label for="catID" value="{{ __('Category:') }}"/>
-                                <select name="catID" class="block mt-1 w-full border-gray-300 focus:border-indigo-300 focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
-                                    {{-- $categories were declared from ItemController@create --}}
-                                    @if ($categories->isEmpty())
-                                        <option value="">-- No category available --</option>
-                                    @else
-                                        @foreach ($categories as $count => $category)
-                                            {{-- for loop the categories in a single category --}}
-                                            <option value="{{ $category->id }}">{{ $category->cat_name }}</option>
-                                            {{-- we want value of catID only, the cat_name is for easy to read --}}
-                                        @endforeach
-                                    @endif
-                                </select>
-                            </div>
-                            <div class="flex items-center justify-end mt-4">
+                            @if ($categories->isEmpty()) {{-- in case if admin forgot to add categories --}}
+                                <div class="mt-4">
+                                    <x-label for="catID" value="{{ __('Category:') }}"/>
+                                    <p class="text-sm text-red-500">Uh oh, looks like you didn't add any categories yet :)</p>
+                                    <select name="catID" class="block mt-1 w-full border-gray-300 focus:border-indigo-300 focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
+                                            <option value="null" disabled>-- No category available --</option>
+                                    </select>
+                                </div>
+                                <div class="flex items-center justify-end mt-4">
 
-                                <x-button class="m-4 ">
-                                    {{ __('Submit') }}
-                                </x-button>
-                            </div>
+                                    <x-button-disable class="m-4">
+                                        {{ __('Submit') }}
+                                    </x-button-disable>
+                                </div>
+                            @else
+                                <div class="mt-4">
+                                    <x-label for="catID" value="{{ __('Category:') }}"/>
+                                    <select name="catID" class="block mt-1 w-full border-gray-300 focus:border-indigo-300 focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
+                                        {{-- $categories were declared from ItemController@create --}}
+                                        @if ($categories->isEmpty())
+                                            <option value="null" disabled>-- No category available --</option>
+                                        @else
+                                            @foreach ($categories as $count => $category)
+                                                {{-- for loop the categories in a single category --}}
+                                                <option value="{{ $category->id }}">{{ $category->cat_name }}</option>
+                                                {{-- we want value of catID only, the cat_name is for easy to read --}}
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                </div>
+                                <div class="flex items-center justify-end mt-4">
+
+                                    <x-button class="m-4">
+                                        {{ __('Submit') }}
+                                    </x-button>
+                                </div>
+                            @endif
                         </form>
                     </div>
 
