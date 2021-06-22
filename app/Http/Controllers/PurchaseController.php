@@ -53,7 +53,7 @@ class PurchaseController extends Controller
         //     'quantity'=>'required|numeric'
         // ]);
 
-        $checkpurchase = Purchase::all();
+        $checkpurchase = Auth::user()->purchases;
 
         // check if the item is duplicated
         foreach ($checkpurchase as $count => $somepurchase) {
