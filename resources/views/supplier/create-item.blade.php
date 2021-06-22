@@ -23,16 +23,14 @@
                             <div class="mt-4">
                                 <x-label for="item_name" :value="__('Item Name')" />
 
-                                <x-input id="item_name" class="block mt-1 w-full" type="text" name="item_name"
-                                    :value="old('item_name')" required />
+                                <x-input id="item_name" class="block mt-1 w-full" type="text" name="item_name" required />
                             </div>
 
                             {{-- Your Price. In the future, pls letak RM sebelah input thanks :) --}}
                             <div class="mt-4">
                                 <x-label for="item_price" :value="__('Item Price')" />
 
-                                <x-input id="item_price" class="block mt-1 w-full" type="number" step="0.01" name="item_price"
-                                    :value="old('item_price')" required />
+                                <x-input id="item_price" class="block mt-1 w-full" type="number" step="0.01" name="item_price" required />
                             </div>
 
                             {{-- How many items you want --}}
@@ -40,7 +38,7 @@
                                 <x-label for="item_available_unit" :value="__('Item Amount')" />
 
                                 <x-input id="item_available_unit" class="block mt-1 w-full" type="text"
-                                    name="item_available_unit" :value="old('item_available_unit')" required />
+                                    name="item_available_unit" required />
                             </div>
 
                             {{-- Choose a category --}}

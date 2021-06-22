@@ -45,7 +45,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {{-- Get some data of $items, which has been declared from ItemContoller@index --}}
+                            {{-- Get some data of $items, which has been declared from MarketContoller@index --}}
                             @foreach($items as $count => $item)
                             <tr class="text-center">
                                 <td class="border-2 border-purple-500">{{ ++$count }}</td>

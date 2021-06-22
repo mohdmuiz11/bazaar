@@ -21,4 +21,14 @@ class MarketController extends Controller
         $categories = Category::all();
         return view('customer.category', compact('items', 'categories', 'currentcategory'));
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store() {
+
+    }
 }

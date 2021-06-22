@@ -19,29 +19,34 @@
 
                     {{-- Purchase table, almost same as item table --}}
                     <h1 class="font-bold text-lg mb-3">List of customer's orders:</h1>
+                    {{-- {{ $purchases }}
+                    {{ $items }} --}}
                     <table class="w-full table-fixed border-collapse">
                         <thead>
-                            <tr class="bg-green-200">
-                                <th class="w-1/12 border-2 border-green-500">No.</th>
-                                <th class="w-5/12 border-2 border-green-500">Product Name</th>
-                                <th class="w-2/12 border-2 border-green-500">Price</th>
-                                <th class="w-2/12 border-2 border-green-500">Date Purchased</th>
-                                <th class="w-3/12 border-2 border-green-500">Quantity</th>
+                            <tr class="bg-pink-200">
+                                <th class="w-1/12 border-2 border-pink-500">No.</th>
+                                <th class="w-3/12 border-2 border-pink-500">Product Name</th>
+                                <th class="w-2/12 border-2 border-pink-500">Price</th>
+                                <th class="w-2/12 border-2 border-pink-500">Date Purchased</th>
+                                <th class="w-1/12 border-2 border-pink-500">Quantity</th>
+                                <th class="w-3/12 border-2 border-pink-500">Customer's Name</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {{-- Get some data of $purchases, which has been declared from PurchaseContoller@index --}}
-                            @php
-                                $total_price = 0.0;
-                            @endphp
+                            {{-- Get some data of $purchases, which has been declared from OrderController@index --}}
                             @foreach($purchases as $count => $purchase)
-                            <tr class="text-center">
-                                <td class="border-2 border-green-500">{{ ++$count }}</td>
-                                <td class="border-2 border-green-500 text-left pl-3">{{ $purchase->item->item_name }}</td>
-                                <td class="border-2 border-green-500">RM @convert($purchase->item->item_price)</td>
-                                <td class="border-2 border-green-500">{{ $purchase->purchase_date}}</td>
-                                <td class="border-2 border-green-500">{{ $purchase->quantity }}</td>
-                            </tr>
+                                @foreach ($items as $x => $item)
+                                    @if ($purchase->itemID == $item->id)
+                                        <tr class="text-center">
+                                            <td class="border-2 border-pink-500">{{ ++$count }}</td>
+                                            <td class="border-2 border-pink-500 text-left pl-3">{{ $purchase->item->item_name }}</td>
+                                            <td class="border-2 border-pink-500">RM @convert($purchase->item->item_price)</td>
+                                            <td class="border-2 border-pink-500">{{ $purchase->purchase_date}}</td>
+                                            <td class="border-2 border-pink-500">{{ $purchase->quantity }}</td>
+                                            <td class="border-2 border-pink-500">{{ $purchase->customer->name }}</td>
+                                        </tr>
+                                    @endif
+                                @endforeach
                             @endforeach
                         </tbody>
                     </table>

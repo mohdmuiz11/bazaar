@@ -33,6 +33,7 @@ Route::group(['middleware' => ['auth', 'role:customer']], function() {
 Route::group(['middleware' => ['auth', 'role:supplier']], function() {
     // Route::get('/inventory', 'App\Http\Controllers\DashboardController@inventory')->name('dashboard.inventory');
     Route::resource('inventory', 'App\Http\Controllers\ItemController');
+    Route::get('/listorders', 'App\Http\Controllers\OrderController@index')->name('inventory.orders');
 });
 
 //Route category

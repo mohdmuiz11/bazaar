@@ -44,6 +44,11 @@
                         {{ __('Sell Item') }}
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('inventory.orders')" :active="request()->routeIs('inventory.orders')">
+                        {{ __('Customer\'s Orders') }}
+                    </x-nav-link>
+                </div>
                 @endif
 
                 <!-- ADMIN -->
