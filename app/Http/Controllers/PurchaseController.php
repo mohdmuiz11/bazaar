@@ -33,8 +33,9 @@ class PurchaseController extends Controller
     {
         // browsing marketplaces for customers according to categories
         // no search queries, so no
+        $searchwith = 'category';
         $categories = Category::all();
-        return view('customer.marketplace', compact('categories'));
+        return view('customer.marketplace', compact('categories', 'searchwith'));
     }
 
     /**

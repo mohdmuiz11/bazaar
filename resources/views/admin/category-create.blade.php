@@ -23,8 +23,7 @@
                             <div class="mt-4">
                                 <x-label for="cat_name" :value="__('Category Name')" />
 
-                                <x-input id="cat_name" class="block mt-1 w-full" type="text" name="cat_name"
-                                    :value="old('cat_name')" required />
+                                <x-input id="cat_name" class="block mt-1 w-full" type="text" name="cat_name" required />
                             </div>
                                 <x-button class="m-4 ">
                                     {{ __('Submit') }}

@@ -15,20 +15,7 @@
 
                             @csrf
 
-                            <x-label for="catID" value="{{ __('Select Category:') }}"/>
-                            <div class="grid grid-cols-11 gaps-5">
-                                <select name="catID" class="block mt-1 w-full border-gray-300 focus:border-indigo-300 focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm col-span-3">
-                                    <option value="{{ $currentcategory->id }}">{{ $currentcategory->cat_name }}</option> {{-- unchanged option --}}
-                                    @foreach ($categories as $count => $category)
-                                        @if ($category->cat_name != $currentcategory->cat_name) {{-- dont want to appear the same thing --}}
-                                            <option value="{{ $category->id }}">{{ $category->cat_name }}</option> {{-- to select other options --}}
-                                        @endif
-                                    @endforeach
-                                </select>
-                                <x-button class="ml-4 my-1 text-center">
-                                    {{ __('Show') }}
-                                </x-button>
-                            </div>
+                            @include('customer.search', ['categories', 'currentcategory'])
                         </form>
                     </div>
 
@@ -69,6 +56,19 @@
                             @endforeach
                         </tbody>
                     </table>
+
+                    {{-- idk pls return thanks --}}
+                    <div class="flex items-center justify-center bg-gray-100">
+                        <form method="POST" action="{{ route('category.show') }}">
+                            @csrf
+
+                            <input type='hidden' name='catID' value='1' />
+                            <input type='hidden' name='searchBy' value='shop' />
+                            <x-button class="m-4">
+                                {{ __('Return') }}
+                            </x-button>
+                        </form>
+                    </div>
 
                 </div>
             </div>
