@@ -15,7 +15,7 @@
                     <div class="w-full sm:max-w-lg mt-6 mx-auto px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
 
                         {{-- Process of PATCH data to ItemController@update --}}
-                        <form method="POST" action="{{ route('orders.update', $item->id) }}">
+                        <form method="POST" action="{{ route('orders.update', $purchase->id) }}">
 
                             {{-- PATCH means updating data, modern way of POST but updates only --}}
                             @method('PATCH')
