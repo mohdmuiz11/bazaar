@@ -60,7 +60,7 @@
                     <table class="w-full table-fixed border-collapse mt-3">
                         <thead>
                             <tr class="bg-pink-200">
-                                <th class="w-1/12 border-2 border-pink-500">No.</th>
+                                <th class="w-1/12 border-2 border-pink-500">Purchase ID</th>
                                 <th class="w-3/12 border-2 border-pink-500">Product Name</th>
                                 <th class="w-2/12 border-2 border-pink-500">Price</th>
                                 <th class="w-2/12 border-2 border-pink-500">Date Purchased</th>
@@ -74,7 +74,7 @@
                                 @foreach ($details as $x => $detail)
                                     @if ($purchase->itemID == $detail->id)
                                         <tr class="text-center">
-                                            <td class="border-2 border-pink-500">{{ ++$count }}</td>
+                                            <td class="border-2 border-pink-500">{{ $purchase->id }}</td>
                                             <td class="border-2 border-pink-500 text-left pl-3">{{ $purchase->item->item_name }}</td>
                                             <td class="border-2 border-pink-500">RM @convert($purchase->item->item_price)</td>
                                             <td class="border-2 border-pink-500">{{ $purchase->purchase_date}}</td>
