@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Purchase;
 
 use Illuminate\Http\Request;
 
@@ -38,12 +39,13 @@ class AdminController extends Controller
      */
     public function details(Request $request) {
         $usertype = $request->get('userType');
+        $purchases = Purchase::all();
         $id = $request->get('id');
         if ($usertype == 'customer')
             $details = User::find($id)->purchases;
         else if ($usertype == 'supplier')
             $details = User::find($id)->items;
-        return view('admin.userdetails', compact('details', 'usertype'));
+        return view('admin.userdetails', compact('details', 'usertype','purchases'));
     }
 
 }

@@ -55,6 +55,39 @@
                         </tbody>
                     </table>
 
+                    @if ($usertype == 'supplier')
+                    <h1 class="text-bold text-lg mt-9">Customer's Orders:</h1>
+                    <table class="w-full table-fixed border-collapse mt-3">
+                        <thead>
+                            <tr class="bg-pink-200">
+                                <th class="w-1/12 border-2 border-pink-500">No.</th>
+                                <th class="w-3/12 border-2 border-pink-500">Product Name</th>
+                                <th class="w-2/12 border-2 border-pink-500">Price</th>
+                                <th class="w-2/12 border-2 border-pink-500">Date Purchased</th>
+                                <th class="w-1/12 border-2 border-pink-500">Quantity</th>
+                                <th class="w-3/12 border-2 border-pink-500">Customer's Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{-- Get some data of $purchases, which has been declared from OrderController@index --}}
+                            @foreach($purchases as $count => $purchase)
+                                @foreach ($details as $x => $detail)
+                                    @if ($purchase->itemID == $detail->id)
+                                        <tr class="text-center">
+                                            <td class="border-2 border-pink-500">{{ ++$count }}</td>
+                                            <td class="border-2 border-pink-500 text-left pl-3">{{ $purchase->item->item_name }}</td>
+                                            <td class="border-2 border-pink-500">RM @convert($purchase->item->item_price)</td>
+                                            <td class="border-2 border-pink-500">{{ $purchase->purchase_date}}</td>
+                                            <td class="border-2 border-pink-500">{{ $purchase->quantity }}</td>
+                                            <td class="border-2 border-pink-500">{{ $purchase->customer->name }}<br>{{ $purchase->customer->address }}</td>
+                                        </tr>
+                                    @endif
+                                @endforeach
+                            @endforeach
+                        </tbody>
+                    </table>
+                    @endif
+
 
                     <div class="flex items-center justify-center bg-gray-100">
                         <a href="/list{{ $usertype }}s">
