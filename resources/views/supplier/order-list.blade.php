@@ -43,7 +43,7 @@
                                             <td class="border-2 border-pink-500">RM @convert($purchase->item->item_price)</td>
                                             <td class="border-2 border-pink-500">{{ $purchase->purchase_date}}</td>
                                             <td class="border-2 border-pink-500">{{ $purchase->quantity }}</td>
-                                            <td class="border-2 border-pink-500">{{ $purchase->customer->name }}</td>
+                                            <td class="border-2 border-pink-500">{{ $purchase->customer->name }}<br>{{ $purchase->customer->address }}</td>
                                         </tr>
                                     @endif
                                 @endforeach

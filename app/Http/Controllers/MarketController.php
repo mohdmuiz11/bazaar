@@ -42,6 +42,6 @@ class MarketController extends Controller
         $id = $request->get('suppID');
         $searchwith = 'shop';
         $items = User::find($id)->items;
-        return view('customer.category', compact('items', 'searchwith')); // reusing this templat cus why not
+        return view('customer.category', compact('items', 'searchwith')); // reusing this template cus why not
     }
 }
