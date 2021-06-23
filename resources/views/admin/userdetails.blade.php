@@ -36,7 +36,7 @@
                             <tr class="text-center">
                                 <td class="border-2 border-pink-500">{{ $detail->id }}</td>
                                 @if ($usertype == 'customer')
-                                    <td class="border-2 border-pink-500 text-left pl-3">{{ $detail->item_name }}</td>
+                                    <td class="border-2 border-pink-500 text-left pl-3">{{ $detail->item->item_name }}</td>
                                     <td class="border-2 border-pink-500">RM @convert($detail->item->item_price)</td>
                                     <td class="border-2 border-pink-500">{{ $detail->purchase_date}}</td>
                                     <td class="border-2 border-pink-500">{{ $detail->quantity }}</td>
