@@ -16,6 +16,11 @@
                             {{ session()->get('success') }}
                         </div>
                     @endif
+                    @if(session()->get('failed'))
+                        <div class="bg-red-100 p-4 mb-4">
+                            {{ session()->get('failed') }}
+                        </div>
+                    @endif
 
                     {{-- Purchase table, almost same as item table --}}
                     <h1 class="font-bold text-lg mb-3">List of orders that you made:</h1>
@@ -53,13 +58,14 @@
                                         </x-button>
                                     </a>
                                     {{-- To delete items, go here --}}
-                                    <form method="POST" action="{{ route('orders.destroy', $purchase->id) }}">
-                                        @csrf
-                                        @method('DELETE')
-                                        <x-button-del class="m-1">
-                                            {{ __('Delete') }}
-                                        </x-button-del>
-                                    </form>
+                                        <form method="POST" action="{{ route('orders.destroy', $purchase->id) }}">
+                                            @csrf
+                                            @method('DELETE')
+                                            <x-button-del class="m-1">
+                                                {{ __('Delete') }}
+                                            </x-button-del>
+                                        </form>
+
                                 </td>
                             </tr>
                             @endforeach

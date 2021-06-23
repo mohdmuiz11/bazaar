@@ -58,6 +58,16 @@
                             {{ __('Category Editor') }}
                         </x-nav-link>
                     </div>
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-nav-link :href="route('admin.customers')" :active="request()->routeIs('admin.customers')">
+                            {{ __('Customer\'s List') }}
+                        </x-nav-link>
+                    </div>
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-nav-link :href="route('admin.suppliers')" :active="request()->routeIs('admin.suppliers')">
+                            {{ __('Supplier\'s List') }}
+                        </x-nav-link>
+                    </div>
                 @endif
             </div>
 

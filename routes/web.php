@@ -40,6 +40,9 @@ Route::group(['middleware' => ['auth', 'role:supplier']], function() {
 //Route category
 Route::group(['middleware' => ['auth', 'role:admin']], function() {
     Route::resource('admincategory', 'App\Http\Controllers\CategoryController');
+    Route::get('/listcustomers', 'App\Http\Controllers\AdminController@customers')->name('admin.customers');
+    Route::get('/listsuppliers', 'App\Http\Controllers\AdminController@suppliers')->name('admin.suppliers');
+    Route::post('/userdetails', 'App\Http\Controllers\AdminController@details')->name('admin.details');
 });
 
 // Route::post('/createitem', 'App\Http\Controllers\ItemController@store');

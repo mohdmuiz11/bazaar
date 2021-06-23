@@ -56,12 +56,15 @@ class PurchaseController extends Controller
         // ]);
 
         $checkpurchase = Auth::user()->purchases;
+        $item = Item::find($request->get('itemID'));
 
         // check if the item is duplicated
         foreach ($checkpurchase as $count => $somepurchase) {
             if ($somepurchase->itemID == $request->get('itemID')){
                 ++$somepurchase->quantity;
+                --$item->item_available_unit;
                 $somepurchase->save();
+                $item->save();
                 return redirect('/orders')->with('success', 'The item has been added to your orders!');
             }
         }
@@ -76,6 +79,8 @@ class PurchaseController extends Controller
             'quantity' => '1' // default to one quantity, can be edit later
         ]);
         $purchase->save();
+        --$item->item_available_unit;
+        $item->save();
 
         // success message, you can edit it as you like
         return redirect('/orders')->with('success', 'The item has been added to your orders!');
@@ -122,9 +127,21 @@ class PurchaseController extends Controller
 
         // updating all the data from view edit-purchase using PATCH
         // then update relevant details into "purchase" of the "purchases" table
+
         $purchase = Purchase::find($id);
-        $purchase->quantity =  $request->get('quantity');
+        $item = Item::find($purchase->itemID);
+
+        $difference = $purchase->quantity - $request->get('quantity');
+
+        if ($item->item_available_unit + $difference < 0)
+            return redirect('/orders')->with('failed', 'The quantity is more than available units!');
+
+
+        $purchase->quantity = $request->get('quantity');
         $purchase->save();
+
+        $item->item_available_unit = $item->item_available_unit + $difference;
+        $item->save();
 
         // success message, you can edit it as you like
         return redirect('/orders')->with('success', 'All changes are saved!');
@@ -140,6 +157,10 @@ class PurchaseController extends Controller
     {
         // find the purchase's id in "purchases", then deletes it
         $purchase = Purchase::find($id);
+        $item = Item::find($purchase->itemID);
+
+        $item->item_available_unit = $item->item_available_unit + $purchase->quantity;
+        $item->save();
         $purchase->delete();
 
         // success message, you can edit it as you like
